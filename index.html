@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Amor</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a18cd1 100%);
+            color: #333;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1, h2 {
+            color: #ff6f61;
+            text-align: center;
+        }
+
+        /* Contenedor Principal */
+        .container {
+            max-width: 700px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .options, .true-false-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #ff6f61;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            background: #ff8a84;
+        }
+
+        .letter-container, .photos-container, .true-false-container {
+            display: none;
+        }
+
+        /* Estilos de Pastel */
+        .pastel-background {
+            background: #ffe4e1;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Para tu mi Amor 💖</h1>
+
+    <div class="container">
+        <h2>Escoge una opcion:</h2>
+        <div class="options">
+            <button class="btn" onclick="showSection('letter')">Carta</button>
+            <button class="btn" onclick="showSection('photos')">Fotos</button>
+            <button class="btn" onclick="showSection('true-false')">Juego: Verdadero o Falso</button>
+        </div>
+
+        <!-- Sección de Carta -->
+        <div class="letter-container pastel-background" id="letter">
+            <h2>Carta para Ti</h2>
+            <p>Querido amor, cada día a tu lado ha sido especial. <strong>Gracias por ser tú.</strong> 💕</p>
+            <button class="btn" onclick="hideSection('letter')">Volver</button>
+        </div>
+
+        <!-- Sección de Fotos -->
+        <div class="photos-container pastel-background" id="photos">
+            <h2>Momentos Hermosos</h2>
+            <img src="IMG_6251.jpeg" alt="Foto1" style="width:80%;border-radius:10px;margin-bottom:10px;">
+            <img src="IMG_4914.jpeg" alt="Foto2" style="width:80%;border-radius:10px;">
+            <button class="btn" onclick="hideSection('photos')">Volver</button>
+        </div>
+
+        <!-- Sección de Verdadero o Falso -->
+        <div class="true-false-container pastel-background" id="true-false">
+            <h2>Verdadero o Falso</h2>
+            <div class="questions-container">
+                <p id="questionText">¿Yo te amo mas que tu a mi?</p>
+                <button class="btn" onclick="checkAnswer(true)">Verdadero</button>
+                <button class="btn" onclick="checkAnswer(false)">Falso</button>
+                <p id="feedback" style="display:none; font-weight: bold;"></p>
+            </div>
+            <button class="btn" onclick="hideSection('true-false')">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        // Preguntas y respuestas para el juego
+        const questions = [
+            { text: "¿Yo te amo mas que tu a mi?", answer: true },
+            { text: "¿Es cierto que adoro tus ojitos hermosos?", answer: true },
+            { text: "¿La primera canción que te dedique fue 'Ser de ti'?", answer: false }
+        ];
+        let currentQuestion = 0;
+
+        function showSection(section) {
+            document.querySelectorAll('.letter-container, .photos-container, .true-false-container').forEach(div => div.style.display = 'none');
+            document.getElementById(section).style.display = 'block';
+
+            if (section === 'true-false') {
+                loadQuestion();
+            }
+        }
+
+        function hideSection(section) {
+            document.getElementById(section).style.display = 'none';
+        }
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.text;
+            document.getElementById('feedback').style.display = 'none';
+        }
+
+        function checkAnswer(answer) {
+            const question = questions[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            feedback.style.display = 'block';
+
+            if (answer === question.answer) {
+                feedback.textContent = "¡Correcto! 💖";
+                feedback.style.color = '#4CAF50';
+            } else {
+                feedback.textContent = "¡Ay amor, que malo eres jsjs! 💔";
+                feedback.style.color = '#FF6347';
+            }
+
+            // Pasar a la siguiente pregunta después de un pequeño retraso
+            setTimeout(() => {
+                currentQuestion = (currentQuestion + 1) % questions.length;
+                loadQuestion();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
